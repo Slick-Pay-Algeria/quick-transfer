@@ -1,0 +1,31 @@
+{
+    "name": "slick-pay-algeria/quick-transfer",
+    "description": "Laravel package for Slick-Pay Quick Transfer API implementation",
+    "keywords": ["slickpay", "quick transfer"],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "SlickPay\\QuickTransfer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Slick-Pay",
+            "email": "contact@slick-pay.com"
+        },
+        {
+            "name": "Azimut BS",
+            "email": "contact@azimutbs.com"
+        }
+    ],
+    "require": {
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SlickPay\\QuickTransfer\\QuickTransferServiceProvider"
+            ]
+        }
+    }
+
+}
