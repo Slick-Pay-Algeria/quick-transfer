@@ -25,32 +25,32 @@ Laravel package for [Slick-Pay](https://slick-pay.com) Quick Transfer API implem
 
 Just run this command line :
 
-    ```sh
-	composer require slick-pay-algeria/quick-transfer
-    ```
+```sh
+composer require slick-pay-algeria/quick-transfer
+```
 
 ## Configuration
 
 First of all, you have to publish the pakage config file with the command line :
 
-    ```sh
-    php artisan vendor:publish --tag=quick-transfer-config
-    ```
+```sh
+php artisan vendor:publish --tag=quick-transfer-config
+```
 
 Now, you can find a file **quick-transfer.php** within your project **config** folder.
 
-    ```php
-    <?php
+```php
+<?php
 
-    return [
-        'user' => [
-            'rib'     => "",
-            'fname'   => "", // First name
-            'lname'   => "", // Last name
-            'address' => "",
-        ],
-    ];
-    ```
+return [
+'user' => [
+    'rib'     => "",
+    'fname'   => "", // First name
+    'lname'   => "", // Last name
+    'address' => "",
+],
+];
+```
 
 ### user.rib
 
@@ -76,22 +76,22 @@ By using the **QuickTransfer** class, you will be able to **create new payments*
 
 This function will be used to create a new payment, check the example below :
 
-    ```php
-    <?php
+ ```php
+<?php
 
-    use SlickPay\QuickTransfer\QuickTransfer;
+use SlickPay\QuickTransfer\QuickTransfer;
 
-    $result = QuickTransfer::createPayment([
-        'returnUrl' => "https://www.google.com",
-        'amount'    => 10000,
-        'rib'       => "00012345678912345678",
-        'fname'     => "Lorem",
-        'lname'     => "Ipsum",
-        'address'   => "Dolor",
-    ]);
+$result = QuickTransfer::createPayment([
+    'returnUrl' => "https://www.google.com",
+    'amount'    => 10000,
+    'rib'       => "00012345678912345678",
+    'fname'     => "Lorem",
+    'lname'     => "Ipsum",
+    'address'   => "Dolor",
+]);
 
-    dd($result);
-    ```
+dd($result);
+```
 
 #### Parameters
 
@@ -119,15 +119,15 @@ The result will be an array like :
 
 This function will be used to check the payment status, check the example below :
 
-    ```php
-    <?php
+```php
+<?php
 
-    use SlickPay\QuickTransfer\QuickTransfer;
+use SlickPay\QuickTransfer\QuickTransfer;
 
-    $result = QuickTransfer::paymentStatus(1);
+$result = QuickTransfer::paymentStatus(1);
 
-    dd($result);
-    ```
+dd($result);
+```
 
 #### Parameters
 
