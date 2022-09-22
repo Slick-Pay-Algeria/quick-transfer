@@ -43,18 +43,18 @@ Now, you can find a file **quick-transfer.php** within your project **config** f
 <?php
 
 return [
-'user' => [
-    'rib'     => "",
-    'fname'   => "", // First name
-    'lname'   => "", // Last name
-    'address' => "",
-],
+    'user' => [
+        'rib'     => "",
+        'fname'   => "", // First name
+        'lname'   => "", // Last name
+        'address' => "",
+    ],
 ];
 ```
 
 ### user.rib
 
-It will define the merchant bank account ID, it should be a string with minimum length of 20 characters.
+It will define the merchant bank account ID, it should be a string with the exact size of 20 characters.
 
 ### user.fname
 
@@ -74,9 +74,39 @@ By using the **QuickTransfer** class, you will be able to **create new payments*
 
 ### createPayment
 
-This function will be used to create a new payment, check the example below :
+To create any new payment, you will use the **createPayment** function provided within the **QuickTransfer** Class.
 
- ```php
+#### Parameters
+
+* **returnUrl:** <**string**> (optional), the callback URL that the user will be redirected to after the payment was successfully completed from the payment platform
+* **amount:** <**numeric**> (required), the transaction amount in "Dinar algérien" currency, the minimum accepted amount is **100 DA**
+* **[rib](#user.rib):** <**string**> (optional)
+* **[fname](#user.fname):** <**string**> (optional)
+* **[lname](#user.lname):** <**string**> (optional)
+* **[address](#user.address):** <**string**> (optional)
+
+> **Important:** **rib**, **fname**, **lname** and **address** can be configured from [the config file](#configuration) to avoid to send them each time you call the **createPayment** function.
+
+#### Examples
+
+Default usage :
+
+```php
+<?php
+
+use SlickPay\QuickTransfer\QuickTransfer;
+
+$result = QuickTransfer::createPayment([
+    'returnUrl' => "https://www.google.com",
+    'amount'    => 10000,
+]);
+
+dd($result);
+```
+
+You can provide **rib**, **fname**, **lname** and **address** within **createPayment** parameters array to use diffrent values than provided in [the config file](#configuration) :
+
+```php
 <?php
 
 use SlickPay\QuickTransfer\QuickTransfer;
@@ -93,31 +123,29 @@ $result = QuickTransfer::createPayment([
 dd($result);
 ```
 
-#### Parameters
-
-* **returnUrl:** <**string**> (optional), the callback URL that the user will be redirected to after the payment was successfully completed from the payment platform
-* **amount:** <**numeric**> (required), the transaction amount
-* **rib:** <**string**> (required)
-* **fname:** <**string**> (required)
-* **lname:** <**string**> (required)
-* **address:** <**string**> (required)
-
-> **Important:** **rib**, **fname**, **lname** and **address** can be configured from [the config file](#configuration) to avoid to send them each time you call **createPayment**.
-
 #### Return value
 
 The result will be an array like : 
 
 * **success:** <**integer**>, 0 for false, 1 for true
 * **error:** <**integer**>, 0 for false, 1 for true
-* **messages:** <**array**>, it will be sent only when **error == 1**
+* **messages:** <**array**>, contains error messages, it will be sent only when **error == 1**
 * **response:** <**array**>, it will be sent only when **success == 1**, it contains the API response
     * **transferId:** Payment transfer ID (can be used to check payment status)
     * **redirectUrl:** The redirect url to redirect the client to the payment platform
 
 ### paymentStatus
 
-This function will be used to check the payment status, check the example below :
+If you would like to check any payment status, you will use the **paymentStatus** provided within the **QuickTransfer** Class.
+
+#### Parameters
+
+* **transferId:** <**number**> (required), Payment transfer ID
+* **[rib](#user.rib):** <**string**> (optional)
+
+#### Examples
+
+Check the example below :
 
 ```php
 <?php
@@ -129,18 +157,14 @@ $result = QuickTransfer::paymentStatus(1);
 dd($result);
 ```
 
-#### Parameters
-
-* **transferId:** <**number**> (required)
-
 #### Return value
 
 The result will be an array like : 
 
 * **success:** <**integer**>, 0 for false, 1 for true
 * **error:** <**integer**>, 0 for false, 1 for true
-* **status:** <**string**>, it will be sent only when **success == 1**
-* **messages:** <**array**>, it will be sent only when **error == 1**
+* **status:** <**string**>, contains payment status, it will be sent only when **success == 1**
+* **messages:** <**array**>, contains error messages, it will be sent only when **error == 1**
 * **response:** <**array**>, it will be sent only when **success == 1**, it contains the API response
     * **date:** The transaction date (format: Y-m-d H:i:s)
     * **amount:** The transaction amount
@@ -151,5 +175,5 @@ The result will be an array like :
     * **pdf:** Download the order details as a PDF file
 
 ## More help
-   * [Slick-Pay platform](https://slick-pay.com)
+   * [Slick-Pay website](https://slick-pay.com)
    * [Reporting Issues / Feature Requests](https://github.com/Slick-Pay-Algeria/quick-transfer/issues)

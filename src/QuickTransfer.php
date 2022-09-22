@@ -2,7 +2,6 @@
 
 namespace SlickPay\QuickTransfer;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -25,7 +24,7 @@ class QuickTransfer
         $validator = Validator::make($params, [
             'returnUrl' => 'nullable|url',
             'amount'    => 'required|numeric|min:100',
-            'rib'       => 'required|string|min:20',
+            'rib'       => 'required|string|size:20',
             'fname'     => 'required|string|min:3|max:255',
             'lname'     => 'required|string|min:3|max:255',
             'address'   => 'required|string|min:3|max:255',
@@ -97,16 +96,20 @@ class QuickTransfer
      * Check a payment status with it transfer_id
      *
      * @param  integer $transfer_id  The payment transfer_id provided as a return of the initiate function
+     * @param  string  $rib          The merchant bank account ID
      * @return array
      */
-    public static function paymentStatus(int $transfer_id): array
+    public static function paymentStatus(int $transfer_id, string $rib = null): array
     {
         try {
 
             $ch = curl_init();
 
+            $merchant_rib = $rib ?? config('quick-transfer.user.rib');
+
             curl_setopt($ch, CURLOPT_URL, "http://slickpay.azimutbscenter.com/api/slickapiv1/transfer/transferPaymentSatimCheck");
             curl_setopt($ch, CURLOPT_POSTFIELDS, [
+                'rib'         => $merchant_rib,
                 'transfer_id' => $transfer_id,
             ]);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
