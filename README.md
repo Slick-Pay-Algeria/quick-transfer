@@ -7,6 +7,7 @@ Laravel package for [Slick-Pay](https://slick-pay.com) Quick Transfer API implem
 * [Prerequisites](#prerequisites)
 * [Installation](#installation)
 * [Configuration](#configuration)
+    * [sandbox](#sandbox)
     * [user.rib](#user.rib)
     * [user.fname](#user.fname)
     * [user.lname](#user.lname)
@@ -43,7 +44,8 @@ Now, you can find a file **quick-transfer.php** within your project **config** f
 <?php
 
 return [
-    'user' => [
+    'sandbox' => true,
+    'user'    => [
         'rib'     => "",
         'fname'   => "", // First name
         'lname'   => "", // Last name
@@ -51,6 +53,10 @@ return [
     ],
 ];
 ```
+
+### sandbox
+
+Will indicate if you want to use a sandbox or live environment (default: true).
 
 ### user.rib
 

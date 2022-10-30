@@ -40,7 +40,11 @@ class QuickTransfer
 
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, "http://slick-pay.com/api/slickapiv1/transfer");
+            $domain_name = config('quick-transfer.sandbox', true) 
+                ? "dev.quick.slick-pay.com"
+                : "quick.slick-pay.com";
+
+            curl_setopt($ch, CURLOPT_URL, "https://{$domain_name}/api/slickapiv1/transfer");
             curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -107,7 +111,11 @@ class QuickTransfer
 
             $merchant_rib = $rib ?? config('quick-transfer.user.rib');
 
-            curl_setopt($ch, CURLOPT_URL, "http://slick-pay.com/api/slickapiv1/transfer/transferPaymentSatimCheck");
+            $domain_name = config('quick-transfer.sandbox', true) 
+                ? "dev.quick.slick-pay.com"
+                : "quick.slick-pay.com";
+
+            curl_setopt($ch, CURLOPT_URL, "https://{$domain_name}/api/slickapiv1/transfer/transferPaymentSatimCheck");
             curl_setopt($ch, CURLOPT_POSTFIELDS, [
                 'rib'         => $merchant_rib,
                 'transfer_id' => $transfer_id,

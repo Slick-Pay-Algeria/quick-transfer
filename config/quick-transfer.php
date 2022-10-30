@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'user' => [
+    'sandbox' => true,
+    'user'    => [
         'rib'     => "",
         'fname'   => "", // First name
         'lname'   => "", // Last name
